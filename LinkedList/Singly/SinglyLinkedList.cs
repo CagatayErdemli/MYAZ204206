@@ -11,6 +11,9 @@ namespace LinkedList.Singly
     {
         public SinglyLinkedListNode<T>? Head { get; set; }
 
+        public int Count { get; private set; }
+
+
         public SinglyLinkedList()
         {
 
@@ -23,12 +26,14 @@ namespace LinkedList.Singly
             if(Head is null)
             {
                 Head = node;
+                Count++;
                 return;
             }
 
             node.Next = Head;
             Head = node;
-            return ;
+            Count++;
+            return;
         }
 
         public void AddLast(T item)
@@ -37,6 +42,7 @@ namespace LinkedList.Singly
             if (Head is null)
             {
                 Head = node;
+                Count++;
                 return;
             }
 
@@ -48,6 +54,7 @@ namespace LinkedList.Singly
                 current = current.Next;
             }
             prev.Next = node;
+            Count++;
             return;
         }
 
@@ -69,6 +76,7 @@ namespace LinkedList.Singly
                 {
                     newNode.Next = prev.Next;
                     prev.Next=newNode;
+                    Count++;
                     return;
                 }
                 prev = current;
@@ -93,6 +101,7 @@ namespace LinkedList.Singly
                 {
                     newNode.Next = current.Next;
                     current.Next=newNode;
+                    Count++;
                     return;
                 }
                 current = current.Next;
@@ -106,6 +115,7 @@ namespace LinkedList.Singly
             if (Head is null) throw new Exception("Linked list is empty!");
             T item = Head.Value;
             Head = Head.Next;
+            Count--;
             return item;
         }
 
@@ -119,6 +129,7 @@ namespace LinkedList.Singly
             {
                 T item = current.Value;
                 Head = null;
+                Count--;
                 return item;
             }
 
@@ -128,6 +139,7 @@ namespace LinkedList.Singly
                 {
                     T item = current.Value;
                     prev.Next = null;
+                    Count--;
                     return item;
                 }
                 prev = current;
@@ -150,6 +162,7 @@ namespace LinkedList.Singly
                 {
                     T item = node.Value;
                     current.Next = current.Next.Next;
+                    Count--;
                     return item;
                 }
                 current = current.Next;

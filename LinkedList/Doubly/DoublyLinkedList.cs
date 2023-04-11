@@ -13,10 +13,12 @@ namespace LinkedList.Doubly
         public DbNode<T> Tail { get; set; }
 
         private bool _isHeadNull { get; set; }
+        public int Count { get; private set; }
 
         public DoublyLinkedList()
         {
             this._isHeadNull = true;
+            Count = 0;
         }
 
         public DoublyLinkedList(IEnumerable<T> values)
@@ -26,6 +28,42 @@ namespace LinkedList.Doubly
             {
                 AddLast(item);
             }
+        }
+
+        public void AddFirst(T item)
+        {
+            var node = new DbNode<T>(item);
+            if (_isHeadNull)
+            {
+                Head = node;
+                Tail = node;
+                _isHeadNull = false;
+                Count++;
+                return;
+            }
+
+            Head.Prev = node;
+            node.Next = Head;
+            Head = node;
+            Count++;
+        }
+
+        public void AddLast(T item)
+        {
+            var node = new DbNode<T>(item);
+            if (_isHeadNull)
+            {
+                Head = node;
+                Tail = node;
+                _isHeadNull = false;
+                Count++;
+                return; 
+            }
+
+            Tail.Next = node;
+            node.Prev = Tail;
+            Tail = node;
+            Count++;
         }
 
         public void AddBefore(DbNode<T> node, T value)
@@ -49,6 +87,8 @@ namespace LinkedList.Doubly
                     newNode.Prev = prev;
                     prev.Next = newNode;
                     newNode.Next.Prev = newNode;
+                    Count++;
+                    return;
                 }
                 prev = current;
                 current = current.Next;
@@ -56,38 +96,39 @@ namespace LinkedList.Doubly
             throw new ArgumentException("There is no such a node in the list.");
 
         }
-        public void AddFirst(T item)
+
+        public void AddAfter(DbNode<T> node, T value)
         {
-            var node = new DbNode<T>(item);
-            if (_isHeadNull)
+            if (node is null || value is null) throw new Exception("Can not be null");
+            if (_isHeadNull || node.Equals(Head))
             {
-                Head = node;
-                Tail = node;
-                _isHeadNull = false;
+                AddFirst(value);
                 return;
             }
 
-            Head.Prev = node;
-            node.Next = Head;
-            Head = node;
-        }
+            var newNode = new DbNode<T>(value);
+            var current = Head;
 
-        public void AddLast(T item)
-        {
-            var node = new DbNode<T>(item);
-            if (_isHeadNull)
+            while (current is not null)
             {
-                Head = node;
-                Tail = node;
-                _isHeadNull = false;
-                return; 
+                if (current.Equals(node))
+                {
+                    if (current.Next is not null)
+                    {
+                        newNode.Next = current.Next;
+                        newNode.Prev = current;
+                        current.Next.Prev = newNode;
+                        current.Next = newNode;
+                        Count++;
+                        return;
+                    }
+                    AddLast(value);
+                    return;
+                }
+                current = current.Next;
             }
-
-            Tail.Next = node;
-            node.Prev = Tail;
-            Tail = node;
+            throw new Exception("Node not found.");
         }
-
         public T RemoveFirst()
         {
             if (_isHeadNull) throw new Exception("List is empty!");
@@ -98,21 +139,29 @@ namespace LinkedList.Doubly
                 item = Head.Value;
                 Head = null;
                 Tail = null;
+                Count--;
                 return item;
             }
 
             item = Head.Value;
             Head = Head.Next;
             Head.Prev = null;
+            Count--;
             return item;
         }
 
         public T RemoveLast()
         {
-            if (_isHeadNull) throw new Exception("List is empty!");
+            if (_isHeadNull || Count == 0) throw new Exception();
+            if (Count == 1)
+            {
+                var result = RemoveFirst();
+                return result; 
+            }
             T item = Tail.Value;
             Tail = Tail.Prev;
             Tail.Next = null;
+            Count--;
             return item;
         }
 
@@ -134,12 +183,13 @@ namespace LinkedList.Doubly
                     prev.Next = current.Next;
                     current.Next.Prev = current.Prev;
                     current = null;
+                    Count--;
                     return temp.Value;
                 }
                 prev = current;
                 current = current.Next;
             }
-            throw new ArgumentException("There is no such a this node in the list.");
+            throw new Exception("There is no such a this node in the list.");
         }
 
         public IEnumerator<T> GetEnumerator()
