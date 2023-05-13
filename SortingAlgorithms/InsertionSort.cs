@@ -9,10 +9,11 @@ namespace SortingAlgorithms
 {
     public class InsertionSort
     {
-        public static T[] Sort<T>(T[] arr, SortDirection sortDirection= SortDirection.Ascending)
+        public static T[] Sort<T>(T[] arr, SortDirection sortDirection = SortDirection.Ascending,IComparer < T > compare = null)
             where T : IComparable
         {
-            var comparer = new CustomComparer<T>(sortDirection, Comparer<T>.Default);
+            if (compare is null) compare = Comparer<T>.Default;
+            var comparer = new CustomComparer<T>(sortDirection, compare);
             for (int i = 0; i < arr.Length-1; i++)
             {
                 for (int j = i+1; j > 0; j--)
