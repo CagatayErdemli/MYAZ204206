@@ -2,26 +2,31 @@
 
 namespace Array
 {
-    public class Array : IEnumerable
+    public class Array<T> : IEnumerable<T>
     {
-        private Object[] _InnerArray;
-        private int index = 0;
+        private T[] _InnerArray;
+        public int index = 0;
         public int Count => index;
         public int Capacity => _InnerArray.Length;
         public Array()
         {
-            _InnerArray = new Object[4];
+            _InnerArray = new T[4];
         }
 
-        public Array(params Object[] items)
+        public Array(params T[] items)
         {
-            var newArray = new Object[items.Length];
+            var newArray = new T[items.Length];
             System.Array.Copy(items, newArray, items.Length);
             _InnerArray = newArray;
             index = items.Count();
         }
 
-        public void Add(Object item)
+        public Array(int _size)
+        {
+            _InnerArray = new T[_size];
+        }
+
+        public void Add(T item)
         {
             if (index==Capacity)
             {
@@ -31,26 +36,27 @@ namespace Array
             index++;
         }
 
-        private void DoubleArray(object[] innerArray)
+        private void DoubleArray(T[] innerArray)
         {
-            var newArray = new Object[innerArray.Length * 2];
+            var newArray = new T[innerArray.Length * 2];
             System.Array.Copy(innerArray, newArray, innerArray.Length);
             _InnerArray = newArray;
         }
 
-        public Object GetItem(int position)
+        public T GetItem(int position)
         {
             if (position < 0 || position >= _InnerArray.Length) throw new IndexOutOfRangeException();
             return _InnerArray[position];
         }
 
-        public void SetItem(int position, Object item)
+        public void SetItem(T item, int position)
         {
             if (position < 0 || position >= _InnerArray.Length) throw new IndexOutOfRangeException();
+            if (item == null) throw new ArgumentNullException();
             _InnerArray[position] = item;
         }
 
-        public int Find(Object item)
+        public int Find(T item)
         {
             for (int i = 0; i < _InnerArray.Length; i++)
             {
@@ -62,9 +68,9 @@ namespace Array
             return -1;
         }
 
-        public Object[] Copy(int v1, int v2)
+        public T[] Copy(int v1, int v2)
         {
-            var newArray = new Object[v2];
+            var newArray = new T[v2];
             int j = 0;
 
             for (int i = v1; i < v2; i++)
@@ -75,10 +81,10 @@ namespace Array
             return newArray;
         }
 
-        public Object RemoveItem(int position)
+        public T RemoveItem(int position)
         {
             var item = GetItem(position);
-            SetItem(position, null);
+            SetItem(default,position);
 
             for (int i = 0; i < Count-1; i++)
             {
@@ -88,7 +94,7 @@ namespace Array
 
             if (index == Capacity/2)
             {
-                var newArray = new Object[_InnerArray.Length / 2];
+                var newArray = new T[_InnerArray.Length / 2];
                 System.Array.Copy(_InnerArray, newArray, newArray.Length);
                 _InnerArray = newArray;
             }
@@ -102,9 +108,14 @@ namespace Array
             _InnerArray[v] = temp;
         }
 
-        public IEnumerator GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
-            return _InnerArray.GetEnumerator();
+            return _InnerArray.Take(Count).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ArrayTests
         public void ArrayCountTest()
         {
             //Arrange
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
             array.Add(1);
             array.Add(2);
             array.Add(3);
@@ -22,7 +22,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayGetItemTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
             array.Add(1);
             array.Add(2);
             array.Add(3);
@@ -35,7 +35,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayFindTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
             array.Add(1);
             array.Add(2);
             array.Add(3);
@@ -50,7 +50,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayEnumeratorTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
             array.Add(1);
             array.Add(2);
             array.Add(3);
@@ -67,7 +67,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayConstructorTest()
         {
-            var array = new Array.Array(1, 2, 3, 4, 5);
+            var array = new Array.Array<int>(1, 2, 3, 4, 5);
             array.Add(6);
             Assert.Equal(6, array.Count);
         }
@@ -75,8 +75,8 @@ namespace ArrayTests
         [Fact]
         public void ArraySetItemTest()
         {
-            var array = new Array.Array(2,3,4,5);
-            array.SetItem(2, 6);
+            var array = new Array.Array<int>(2,3,4,5);
+            array.SetItem(6,2);
             Assert.Equal(6, array.GetItem(2));
         }
 
@@ -85,7 +85,7 @@ namespace ArrayTests
         {
             try
             {
-                var array = new Array.Array();
+                var array = new Array.Array<int>();
                 array.Add(1);
                 array.Add(3);
                 array.Add(5);
@@ -103,7 +103,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayCopyTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
 
             array.Add(1);
             array.Add(2);
@@ -119,7 +119,7 @@ namespace ArrayTests
         [Fact]
         public void ArraySwapTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
 
             array.Add(1);
             array.Add(2);
@@ -138,7 +138,7 @@ namespace ArrayTests
         [Fact]
         public void ArrayRemoveTest()
         {
-            var array = new Array.Array();
+            var array = new Array.Array<int>();
 
             array.Add(1);
             array.Add(2);
