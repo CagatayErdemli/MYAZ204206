@@ -52,7 +52,7 @@ namespace Array
         public void SetItem(T item, int position)
         {
             if (position < 0 || position >= _InnerArray.Length) throw new IndexOutOfRangeException();
-            if (item == null) throw new ArgumentNullException();
+            //if (item == null) throw new ArgumentNullException();
             _InnerArray[position] = item;
         }
 
