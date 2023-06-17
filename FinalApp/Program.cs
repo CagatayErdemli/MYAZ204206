@@ -4,7 +4,18 @@ using PriorityQueue;
 using Trees;
 using Trees.BinaryTree.BinarySearchTree;
 
-ArrayRemove();
+BinaryTreeInOrderTraverse();
+
+void BinaryTreeInOrderTraverse()
+{
+    using (var context = new FinalAppDbContext())
+    {
+        var list = context.Products.Where(p => p.Price%64 == 0).ToList();
+        var tree = new BinaryTree<Product>(list);
+        var result = BinaryTree<Product>.PostOrderTraverse(tree.Root,new List<Product>());
+        foreach (var item in result) Console.WriteLine(item);
+    }
+}
 
 void ArrayRemove()
 {

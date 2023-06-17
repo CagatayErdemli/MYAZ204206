@@ -90,6 +90,19 @@ namespace Trees
             return list;
         }
 
+        public static List<T> PostOrderTraverse(Node<T> root, List<T> list)
+        {
+            if (root is null) return null;
+
+            if (root is not null)
+            {
+                InOrderTraverse(root.Left, list);
+                InOrderTraverse(root.Right, list);
+                list.Add(root.Value);   
+            }
+            return list;
+        }
+
         public static List<T> InOrderIterationTraverse(Node<T> root)
         {
 
