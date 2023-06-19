@@ -4,7 +4,7 @@ using PriorityQueue;
 using Trees;
 using Trees.BinaryTree.BinarySearchTree;
 
-BinaryTreeInOrderTraverse();
+Test();
 
 void BinaryTreeInOrderTraverse()
 {
@@ -16,7 +16,7 @@ void BinaryTreeInOrderTraverse()
         foreach (var item in result) Console.WriteLine(item);
     }
 }
-
+Console.WriteLine(Math.Pow(1.25,1.25));
 void ArrayRemove()
 {
     using (var context = new FinalAppDbContext())
@@ -58,6 +58,26 @@ void GetProductPaging()
 
         foreach (var item in traverse) Console.WriteLine(item);
     }
+}
+
+void GetProductPagingHeap()
+{
+    using (var context = new FinalAppDbContext())
+    {
+        var list = context.Products.ToList();
+        var result = getPagination(list, 10, 10);
+        var heap = new MinHeap<Product>(result);
+        //foreach (var item in heap) Console.WriteLine(item);
+        Console.WriteLine(heap.Array.GetItem(4));
+    }
+}
+
+void Test()
+{
+    List<int> list = new List<int>() { 55, 30, 58, 78, 12, 62, 14, 15, 17 };
+    var result = new BST<int>(list);
+    var traverse = BinaryTree<int>.LevelOrderTraverse(result.Root);
+    foreach (var item in traverse) Console.WriteLine(item);
 }
 
 List<Product> getPagination(List<Product> list, int page, int pageSize)

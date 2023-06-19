@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Array\Array.csproj" />
+    <ProjectReference Include="..\DisjointSet\DisjointSet.csproj" />
+    <ProjectReference Include="..\PriorityQueue\PriorityQueue.csproj" />
+    <ProjectReference Include="..\Queue\Queue.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 

@@ -103,6 +103,19 @@ namespace Trees
             return list;
         }
 
+        public static List<T> PreOrderTraverse(Node<T> root, List<T> list)
+        {
+            if (root is null) return null;
+
+            if (root is not null)
+            {
+                list.Add(root.Value);
+                InOrderTraverse(root.Left, list);
+                InOrderTraverse(root.Right, list);  
+            }
+            return list;
+        }
+
         public static List<T> InOrderIterationTraverse(Node<T> root)
         {
 
