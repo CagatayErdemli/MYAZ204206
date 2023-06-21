@@ -96,8 +96,8 @@ namespace Trees
 
             if (root is not null)
             {
-                InOrderTraverse(root.Left, list);
-                InOrderTraverse(root.Right, list);
+                PostOrderTraverse(root.Left, list);
+                PostOrderTraverse(root.Right, list);
                 list.Add(root.Value);   
             }
             return list;
@@ -110,8 +110,8 @@ namespace Trees
             if (root is not null)
             {
                 list.Add(root.Value);
-                InOrderTraverse(root.Left, list);
-                InOrderTraverse(root.Right, list);  
+                PreOrderTraverse(root.Left, list);
+                PreOrderTraverse(root.Right, list);  
             }
             return list;
         }

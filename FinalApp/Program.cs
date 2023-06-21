@@ -4,7 +4,7 @@ using PriorityQueue;
 using Trees;
 using Trees.BinaryTree.BinarySearchTree;
 
-BSTPagination();
+BinaryTreeInOrderTraverse();
 
 void BSTPagination()
 {
@@ -17,6 +17,19 @@ void BSTPagination()
         tree.Remove(tree.Root, product);
         var inOrder = BinaryTree<Product>.InOrderIterationTraverse(tree.Root);
         foreach (var item in inOrder) Console.WriteLine(item);
+    }
+}
+
+void ArrayItems()
+{
+    using (var context = new FinalAppDbContext())
+    {
+        var list = context.Products.ToList();
+        var array = new Array.Array<Product>();
+        foreach (var item in list) array.Add(item);
+        Console.WriteLine($"Kapasite: {array.Capacity}");
+        Console.WriteLine($"Sakladığı Eleman Sayısı: {array.Count}");
+        Console.WriteLine($"İlk Eleman: {array.GetItem(0)}");
     }
 }
 
@@ -66,6 +79,21 @@ void BinaryTreeInOrderTraverse()
         var tree = new BinaryTree<Product>(list);
         var result = BinaryTree<Product>.PostOrderTraverse(tree.Root,new List<Product>());
         foreach (var item in result) Console.WriteLine(item);
+    }
+}
+
+void BinaryTreeFiltered()
+{
+    using (var context = new FinalAppDbContext())
+    {
+        var list = context.Products.Where(p => p.Price % 4 == 0).ToList();
+        var tree = new BinaryTree<Product>(list);
+        var result = BinaryTree<Product>.LevelOrderTraverse(tree.Root);
+        decimal sum = 0;
+        foreach (var item in result) sum += item.Value.Price;
+        Console.WriteLine($"Toplam - {sum}");
+        Console.WriteLine($"Ortalama - {sum/tree.Count}");
+        Console.WriteLine($"Kök - {tree.Root}");
     }
 }
 
